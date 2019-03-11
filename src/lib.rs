@@ -9,6 +9,7 @@ pub type H = raw::c_short;
 pub type I = raw::c_int;
 pub type J = raw::c_longlong;
 pub type S = *mut raw::c_char;
+pub type Sconst = *const raw::c_char;
 pub type G = raw::c_uchar;
 pub type C = raw::c_char;
 pub type E = raw::c_float;
@@ -28,6 +29,7 @@ pub struct k0 {
 }
 
 pub type K = *mut k0;
+pub type Kconst = *const k0;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -71,7 +73,7 @@ extern "C" {
     pub fn jk(arg1: *mut K, arg2: K) -> K;
     pub fn js(arg1: *mut K, arg2: S) -> K;
     pub fn jv(k: *mut K, arg2: K) -> K;
-    pub fn k(arg1: I, arg2: S, ...) -> K;
+    pub fn k(arg1: I, arg2: Sconst, ...) -> K;
     pub fn ka(arg1: I) -> K;
     pub fn kb(arg1: I) -> K;
     pub fn kc(arg1: I) -> K;
@@ -81,17 +83,17 @@ extern "C" {
     pub fn kf(arg1: F) -> K;
     pub fn kg(arg1: I) -> K;
     pub fn kh(arg1: I) -> K;
-    pub fn khp(arg1: S, arg2: I) -> I;
-    pub fn khpu(arg1: S, arg2: I, arg3: S) -> I;
-    pub fn khpun(arg1: S, arg2: I, arg3: S, arg4: I) -> I;
-    pub fn khpunc(arg1: S, arg2: I, arg3: S, arg4: I, arg5: I) -> I;
+    pub fn khp(arg1: Sconst, arg2: I) -> I;
+    pub fn khpu(arg1: Sconst, arg2: I, arg3: Sconst) -> I;
+    pub fn khpun(arg1: Sconst, arg2: I, arg3: Sconst, arg4: I) -> I;
+    pub fn khpunc(arg1: Sconst, arg2: I, arg3: Sconst, arg4: I, arg5: I) -> I;
     pub fn ki(arg1: I) -> K;
     pub fn kj(arg1: J) -> K;
     pub fn knk(arg1: I, ...) -> K;
     pub fn knt(arg1: J, arg2: K) -> K;
     pub fn kp(arg1: S) -> K;
     pub fn kpn(arg1: S, arg2: J) -> K;
-    pub fn krr(arg1: S) -> K;
+    pub fn krr(arg1: Sconst) -> K;
     pub fn ks(arg1: S) -> K;
     pub fn kt(arg1: I) -> K;
     pub fn ktd(arg1: K) -> K;
@@ -101,7 +103,7 @@ extern "C" {
     pub fn kz(arg1: F) -> K;
     pub fn m9(arg1: V) -> V;
     pub fn okx(arg1: K) -> I;
-    pub fn orr(arg1: S) -> K;
+    pub fn orr(arg1: Sconst) -> K;
     pub fn r0(arg1: K) -> V;
     pub fn r1(arg1: K) -> K;
     pub fn sd0(arg1: I) -> V;
@@ -119,12 +121,23 @@ extern "C" {
 
 #[cfg(test)]
 mod tests {
-    use crate::k0;
+    use crate::*;
+    use std::ffi::CString;
+    use std::ptr;
+
     #[test]
     fn size_of_k0() {
         assert_eq!(std::mem::size_of::<k0>(), 24);
     }
 
     #[test]
-    fn test_api() {}
+    fn test_api() {
+        unsafe {
+            let hostname = CString::new("localhost").unwrap();
+            let h = khp(hostname.as_ptr(), 5000);
+            let query = CString::new("a:3").unwrap();
+            let _ = k(h, query.as_ptr(), ptr::null() as *const V);
+            kclose(h);
+        }
+    }
 }
