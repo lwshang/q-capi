@@ -1,3 +1,5 @@
-[build]
-rustflags = ["-C","link-args=-lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a"]
+[target.x86_64-apple-darwin]
+rustflags = ["-Clink-args=src/kdb/m64/e.o /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a"]
 
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-Clink-args=src/kdb/l64/e.o"]
