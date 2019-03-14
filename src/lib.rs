@@ -135,9 +135,14 @@ mod tests {
         unsafe {
             let hostname = CString::new("localhost").unwrap();
             let h = khp(hostname.as_ptr(), 5000);
-            let query = CString::new("a:3").unwrap();
-            let _ = k(h, query.as_ptr(), ptr::null() as *const V);
-            kclose(h);
+            if h > 0 {
+                let query = CString::new("a:3").unwrap();
+                let _ = k(h, query.as_ptr(), ptr::null() as *const V);
+                let query = CString::new("a").unwrap();
+                let res = k(h, query.as_ptr(), ptr::null() as *const V);
+                kclose(h);
+                assert_eq!((*res).union_in_k0.j, 3);
+            }
         }
     }
 }
