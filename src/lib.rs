@@ -25,7 +25,7 @@ pub struct k0 {
     pub t: raw::c_schar, // The object's type
     pub u: C,            // The object's attribute flags
     pub r: I,            // The object's reference count
-    pub _value: ValueUnion,
+    _value: ValueUnion,
 }
 
 pub type K = *mut k0;
@@ -33,7 +33,7 @@ pub type Kconst = *const k0;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub union ValueUnion {
+pub(crate) union ValueUnion {
     // The atoms are held in the following members:
     pub g: G,
     pub h: H,
@@ -44,14 +44,14 @@ pub union ValueUnion {
     pub s: S,
     // The following members are used for more complex data.
     pub k: *mut k0,
-    pub _collection: Collection,
+    _collection: Collection,
     // align as 128 bits
     _union_align: [u64; 2usize],
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub struct Collection {
+pub(crate) struct Collection {
     pub n: J,            // number of elements in vector
     pub G0: [G; 1usize], // byte kG / char kC / pointer to underlying vectors
 }
