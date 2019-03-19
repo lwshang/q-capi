@@ -1,3 +1,0 @@
-[submodule "src/kdb"]
-	path = src/kdb
-	url = git@github.com:KxSystems/kdb.git
