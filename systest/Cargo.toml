@@ -1,0 +1,11 @@
+[package]
+name = "systest"
+version = "0.1.0"
+authors = ["lwshang <lwsh37@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+q-capi = { path = ".." }
+
+[build-dependencies]
+ctest = "0.2"
