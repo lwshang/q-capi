@@ -15,7 +15,6 @@ pub type C = raw::c_char;
 pub type E = raw::c_float;
 pub type F = raw::c_double;
 pub type V = raw::c_void;
-// pub type callback_func = unsafe extern "C" fn(I) -> K; // used in sd1
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -29,7 +28,6 @@ pub struct k0 {
 }
 
 pub type K = *mut k0;
-// pub type Kconst = *const k0;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -71,9 +69,11 @@ extern "C" {
     /// date to number
     pub fn dj(arg1: I) -> I;
     /// dynamic link
-    // pub fn dl(arg1: *mut V, arg2: I) -> K;
+    #[cfg(embed)]
+    pub fn dl(arg1: *mut V, arg2: I) -> K;
     /// apply
-    // pub fn dot(arg1: K, arg2: K) -> K;
+    #[cfg(embed)]
+    pub fn dot(arg1: K, arg2: K) -> K;
     /// error string
     pub fn ee(arg1: K) -> K;
     /// join value
@@ -151,11 +151,14 @@ extern "C" {
     /// increment refcount
     pub fn r1(arg1: K) -> K;
     /// remove callback
-    // pub fn sd0(arg1: I) -> V;
+    #[cfg(embed)]
+    pub fn sd0(arg1: I) -> V;
     /// remove callback conditional
-    // pub fn sd0x(arg1: I, arg2: I) -> V;
+    #[cfg(embed)]
+    pub fn sd0x(arg1: I, arg2: I) -> V;
     /// set function on loop
-    // pub fn sd1(arg1: I, arg2: extern "C" fn(I) -> K) -> K;
+    #[cfg(embed)]
+    pub fn sd1(arg1: I, arg2: extern "C" fn(I) -> K) -> K;
     // toggle symbol lock
     pub fn setm(arg1: I) -> I;
     /// intern chars
@@ -173,31 +176,3 @@ extern "C" {
     /// numbers to date
     pub fn ymd(arg1: I, arg2: I, arg3: I) -> I;
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::*;
-//     use std::ffi::CString;
-//     use std::ptr;
-
-//     #[test]
-//     fn size_of_k0() {
-//         assert_eq!(std::mem::size_of::<k0>(), 24);
-//     }
-
-//     #[test]
-//     fn test_api() {
-//         unsafe {
-//             let hostname = CString::new("localhost").unwrap();
-//             let h = khp(hostname.as_ptr(), 5000);
-//             if h > 0 {
-//                 let query = CString::new("a:3").unwrap();
-//                 let _ = k(h, query.as_ptr(), ptr::null() as *const V);
-//                 let query = CString::new("a").unwrap();
-//                 let res = k(h, query.as_ptr(), ptr::null() as *const V);
-//                 kclose(h);
-//                 assert_eq!((*res)._value.j, 3);
-//             }
-//         }
-//     }
-// }
