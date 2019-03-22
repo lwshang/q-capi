@@ -1,6 +1,8 @@
 # Rust binding for q/kdb+ [WIP]
 
 [![Build Status](https://travis-ci.org/lwshang/q-capi.svg?branch=master)](https://travis-ci.org/lwshang/q-capi)
+![GitHub](https://img.shields.io/github/license/lwshang/q-capi.svg)
+![platform](https://img.shields.io/badge/platform-macOS%20|%20linux-blue.svg)
 
 This crate provides low-level binding (FFI) of the C API to q/kdb+. A high-level idiomatic Rust interface will be developed base on it.
 
