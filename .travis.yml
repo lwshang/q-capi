@@ -1,4 +1,4 @@
-languague: rust
+language: rust
 
 rust:
   - stable
@@ -9,8 +9,15 @@ os:
   - linux
 
 script:
-  - cargo build
+  - cargo build --verbose
   - cargo run --manifest-path systest/Cargo.toml
+
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+
+cache: cargo
 
 notifications:
   email:
