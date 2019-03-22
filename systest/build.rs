@@ -18,6 +18,14 @@ fn main() {
         }
     });
 
+    // following functions are not defined in e.o, so skip here
+    cfg.skip_fn(|x| {
+        match x {
+            "dl" | "dot" | "sd0" | "sd0x" | "sd1" => true,
+            _ => false,
+        }
+    });
+
     // Translate some Rust types to C
     cfg.type_name(|ty, _, _| {
     match ty {

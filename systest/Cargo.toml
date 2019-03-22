@@ -5,7 +5,7 @@ authors = ["lwshang <lwsh37@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-q-capi = { path = ".." }
+q-capi = { path = ".." , features = ["ipc"] }
 
 [build-dependencies]
 ctest = "0.2"

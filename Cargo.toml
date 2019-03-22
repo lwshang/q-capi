@@ -10,8 +10,6 @@ edition = "2018"
 cc = "1.0"
 
 [features]
-default = ["ipc"]
-
 # to generate share library embeded into q
 # not link kdb object
 embed = []

@@ -10,16 +10,16 @@ os:
   - linux
 
 before_script:
-  - | 
-      if [ $TRAVIS_OS_NAME = 'linux' ]; then
-        pip install 'travis-cargo<0.2' --user &&
-        export PATH=$HOME/.local/bin:$PATH
-      fi
+  - |
+    if [ $TRAVIS_OS_NAME = 'linux' ]; then
+      pip install 'travis-cargo<0.2' --user &&
+      export PATH=$HOME/.local/bin:$PATH
+    fi
 
 script:
   - |
-      cargo build &&
-      cargo run --manifest-path systest/Cargo.toml
+    cargo build &&
+    cargo run --manifest-path systest/Cargo.toml
 
 matrix:
   allow_failures:
@@ -28,8 +28,8 @@ matrix:
 
 after_success:
   - |
-      travis-cargo --only stable doc
-      travis-cargo --only stable doc-upload
+    travis-cargo --only stable doc
+    travis-cargo --only stable doc-upload
 
 cache: cargo
 

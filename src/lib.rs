@@ -69,10 +69,10 @@ extern "C" {
     /// date to number
     pub fn dj(arg1: I) -> I;
     /// dynamic link
-    #[cfg(embed)]
+    #[cfg(not(feature = "ipc"))]
     pub fn dl(arg1: *mut V, arg2: I) -> K;
     /// apply
-    #[cfg(embed)]
+    #[cfg(not(feature = "ipc"))]
     pub fn dot(arg1: K, arg2: K) -> K;
     /// error string
     pub fn ee(arg1: K) -> K;
@@ -93,6 +93,7 @@ extern "C" {
     /// create char
     pub fn kc(arg1: I) -> K;
     /// disconnect
+    #[cfg(not(feature = "embed"))]
     pub fn kclose(arg1: I) -> V;
     /// create date
     pub fn kd(arg1: I) -> K;
@@ -105,12 +106,16 @@ extern "C" {
     /// create short
     pub fn kh(arg1: I) -> K;
     /// connect anonymously
+    #[cfg(not(feature = "embed"))]
     pub fn khp(arg1: Sconst, arg2: I) -> I;
     /// connect, no timeout
+    #[cfg(not(feature = "embed"))]
     pub fn khpu(arg1: Sconst, arg2: I, arg3: Sconst) -> I;
     /// connect
+    #[cfg(not(feature = "embed"))]
     pub fn khpun(arg1: Sconst, arg2: I, arg3: Sconst, arg4: I) -> I;
     /// connect with capability
+    #[cfg(not(feature = "embed"))]
     pub fn khpunc(arg1: Sconst, arg2: I, arg3: Sconst, arg4: I, arg5: I) -> I;
     /// creat int
     pub fn ki(arg1: I) -> K;
@@ -151,13 +156,13 @@ extern "C" {
     /// increment refcount
     pub fn r1(arg1: K) -> K;
     /// remove callback
-    #[cfg(embed)]
+    #[cfg(not(feature = "ipc"))]
     pub fn sd0(arg1: I) -> V;
     /// remove callback conditional
-    #[cfg(embed)]
+    #[cfg(not(feature = "ipc"))]
     pub fn sd0x(arg1: I, arg2: I) -> V;
     /// set function on loop
-    #[cfg(embed)]
+    #[cfg(not(feature = "ipc"))]
     pub fn sd1(arg1: I, arg2: extern "C" fn(I) -> K) -> K;
     // toggle symbol lock
     pub fn setm(arg1: I) -> I;
@@ -166,8 +171,10 @@ extern "C" {
     /// intern string
     pub fn ss(arg1: S) -> S;
     /// sslInfo
+    #[cfg(not(feature = "embed"))]
     pub fn sslInfo(arg1: K) -> K;
     /// release date
+    #[cfg(not(feature = "embed"))]
     pub fn ver() -> I;
     /// create dictionary
     pub fn xD(arg1: K, arg2: K) -> K;
