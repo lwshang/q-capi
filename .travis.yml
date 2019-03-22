@@ -1,4 +1,5 @@
 language: rust
+sudo: false
 
 rust:
   - stable
@@ -8,14 +9,27 @@ os:
   - osx
   - linux
 
+before_script:
+  - | 
+      if [ $TRAVIS_OS_NAME = 'linux' ]; then
+        pip install 'travis-cargo<0.2' --user &&
+        export PATH=$HOME/.local/bin:$PATH
+      fi
+
 script:
-  - cargo build --verbose
-  - cargo run --manifest-path systest/Cargo.toml
+  - |
+      cargo build &&
+      cargo run --manifest-path systest/Cargo.toml
 
 matrix:
   allow_failures:
     - rust: nightly
   fast_finish: true
+
+after_success:
+  - |
+      travis-cargo --only stable doc
+      travis-cargo --only stable doc-upload
 
 cache: cargo
 
