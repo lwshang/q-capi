@@ -1,5 +1,9 @@
 languague: rust
 
+rust:
+  - stable
+  - nightly
+
 os:
   - osx
   - linux
