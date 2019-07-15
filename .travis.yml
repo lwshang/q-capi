@@ -9,6 +9,10 @@ os:
   - osx
   - linux
 
+branches:
+  only:
+  - master
+
 before_script:
   - |
     if [ $TRAVIS_OS_NAME = 'linux' ]; then
